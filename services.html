@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Minerva: Services</title>
+    <link rel="stylesheet" href="css/services.css">
+    <link rel= "icon" type = "image/png" href = images/logo.png><!--tab logo-->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet"><!--font-->
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.556.0.min.js"></script>
+    <script>
+            function checkboxlimit(checkgroup, limit){
+                var checkgroup=checkgroup
+                var limit=limit
+                for (var i=0; i<checkgroup.length; i++){
+                    checkgroup[i].onclick=function(){
+                    var checkedcount=0
+                    for (var i=0; i<checkgroup.length; i++)
+                        checkedcount+=(checkgroup[i].checked)? 1 : 0
+                    if (checkedcount>limit){
+                        alert("You can only select a maximum of "+limit+" source")
+                        this.checked=false
+                        }
+                    }
+                }
+            }
+    
+        </script>
+</head>
+
+<body>
+    <div class="top-bar">
+        <header>
+            <a href="index.html"><img src="images/logo_text_right.svg" alt="minerva logo" class="logo"></a>
+            <nav>
+                <ul class="bar_button" id="nav">
+                    <li><a href="index.html">home</a></li>
+                    <li><a href="services.html">services</a></li>
+                    <li><a href="index.html">about</a></li>
+                    <li><a href="index.html">contact</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+
+    <div class="purple-container">
+        <div class="words-in-purple">
+                <img src="images/logo_white_text_bottom.svg" alt="big logo" class="logo2">
+                <a><span class="hr4">Learn without boundaries</span></a>
+                <h4>Our Services.</h4>
+        </div>
+        <div class="grey-container">
+            <h2>Enter a URL</h2>
+            <h6>or</h6>
+            <form id="checklist">
+                <input type="checkbox" name="tech" value="YT"> Youtube
+                <input type="checkbox" name="tech" value="TED"> TEDTalks
+                <input type="checkbox" name="tech" value="other"> other
+                <script>checkboxlimit(document.forms.checklist.tech, 1)</script>
+            </form>
+            <form id="URLinput" onsubmit="localhost:5000/submit">
+                <input type="url" id= "myURL" name="video" value="" placeholder="Enter url in the form of http://www.example.com/XXXX" maxlength= 57>
+                <input onclick="myFunction()" type="submit" value="convert">
+                <script>
+                    function myFunction() {
+                      var x = document.getElementById("myURL").value;
+                      document.getElementById("demo").innerHTML = x;
+                    }
+                </script>
+            </form>
+
+            <input onclick="myFunction2()" type="file" id="inputAudio2" class="custom-file-input" >
+            <script>
+                var var2;
+                function myFunction2() {
+                    var2 = document.getElementById("inputAudio2").value();
+                    // debugger;
+                }
+
+                AWS.config.update({
+                accessKeyId: "AKIA3WJVXWSFFK5F6SF5",
+                secretAccessKey: "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",
+                "region": "us-west-2"
+                });
+
+                var s3 = new AWS.S3({
+                apiVersion: "2006-03-01",
+                params: { Bucket: "minervaaudio" }
+                });
+                var params = {
+                  Bucket: "minervaaudio", 
+                  Key: "input.mp3",
+                  Body: var2
+                };
+
+                s3.putObject(params, function(err, data) {
+                  if (err) console.log(err, err.stack); // an error occurred
+                  else     console.log(data);           // successful response
+                });
+              </script>
+            <p class="hr9">Supporting mp3, mp4 files</p>
+        </div>
+
+        <div class="white-container">
+            <h3>How it works</h3>
+            <p class="instruction">1. Enter website URL from<br> &nbsp;&nbsp;&nbsp; Youtube, TED.com, or <br> &nbsp;&nbsp; &nbsp;upload your own files.
+            <br><br>2. Receive text transcript<br> &nbsp;&nbsp; &nbsp;from your medium.<br><br>3. Receive related learning
+            <br> &nbsp;&nbsp;&nbsp; materials.<br><br>4. Learn.</p>
+        </div>
+    </div>
+    <h5>Your Transcription.</h5>
+    <div class="grey-container2" id="special-box" style="overflow:auto;padding:5px">
+            <script id= "output">
+            "use strict";
+            fetch("./asrOutput.json")
+              .then(function(resp){
+              return resp.json();
+            })
+            .then(function(data){
+                console.log(data);
+                var var1 = data.results.transcripts["0"].transcript;
+                var jsonPretty = var1.toString();  
+                // document.write(jsonPretty);
+                document.getElementById('special-box').innerHTML = jsonPretty
+            })    
+        </script>
+    </div>
+</body>
+</html>

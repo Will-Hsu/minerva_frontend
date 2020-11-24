@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.283.1.min.js"></script>
+    <script src="./app.js"></script>
+    <script>
+        var albumBucketName = "minervaaudio";
+        var bucketRegion = "us-west-2";
+        var IdentityPoolId = "us-west-2:049067ec-85bf-44d8-9586-47ec7d961e90";
+        
+        AWS.config.region = 'us-west-2'; // Region
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+        IdentityPoolId: 'us-west-2:049067ec-85bf-44d8-9586-47ec7d961e90',
+        });
+
+        
+
+        </script>
+</head>
+<body>    
+      Select a file: <input type="file" id="myFile">
+      <script>
+      addPhoto("logo.jpg")
+      </script>
+    </body>
+</html>

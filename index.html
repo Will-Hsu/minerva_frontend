@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Minerva</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel= "icon" type = "image/png" href = images/logo.png><!--tab logo-->
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet"><!--font-->
+    <script>
+        function checkboxlimit(checkgroup, limit){
+            var checkgroup=checkgroup
+            var limit=limit
+            for (var i=0; i<checkgroup.length; i++){
+                checkgroup[i].onclick=function(){
+                var checkedcount=0
+                for (var i=0; i<checkgroup.length; i++)
+                    checkedcount+=(checkgroup[i].checked)? 1 : 0
+                if (checkedcount>limit){
+                    alert("You can only select a maximum of "+limit+" source")
+                    this.checked=false
+                    }
+                }
+            }
+        }
+
+    </script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.556.0.min.js"></script>
+
+</head>
+
+<body>
+    <div class="top-bar">
+        <header>
+            <a href="index.html"><img src="images/logo_text_right.svg" alt="minerva logo" class="logo"></a>
+            <nav>
+                <ul class="bar_button" id="nav">
+                    <li><a href="index.html">home</a></li>
+                    <li><a href="services.html">services</a></li>
+                    <li><a href="index.html">about</a></li>
+                    <li><a href="index.html">contact</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+
+    <div class="green-container">
+        <div class="words-in-green">
+            <h1><span class="hr">Minerva. </span>A New Learning Tool for All Ages.</h1>
+            <p><span class="hr">- Transcribe</span> college podcasts, TED Talks, Youtube videos, and</p>
+            <p id="extra">mp3, mp4 files to text. </p>
+            <p><span class="hr">- List </span>related articles and videos the subject of your files.</p>
+            <p><span class="hr">- Enhance </span>your education. </p>
+            <a href="services.html" class="cta"><span class="hr2">Try it now</span><span class="hr3">It's free</span></a>
+            <p><a href="#" id="text">Learn more ></a></p>
+                <img src="images/audio_to_text.svg" alt="A to T" id="audio">
+                <img src="images/logo_white_text_bottom.svg" alt="big logo" class="logo2">
+                <a><span class="hr4">Learn without boundaries</span></a>
+        </div>
+    </div>
+
+    <div class="grey-container">
+        <h2>Enter a URL</h2>
+        <form id="checklist">
+            <input type="checkbox" name="tech" value="YT"> Youtube
+            <input type="checkbox" name="tech" value="TED"> TEDTalks
+            <input type="checkbox" name="tech" value="other"> other
+            <script>checkboxlimit(document.forms.checklist.tech, 1)</script>
+        </form>
+        <p><span class="hr6">or</span></p>
+        <form id="URLinput">
+            <input type="url" id= "myURL" name="video" value="" placeholder="Enter url in the form of http://www.example.com/XXXX" maxlength= 67>
+            <input onclick="myFunction()" type="submit" value="convert">
+            <script>
+                function myFunction() {
+                  var x = document.getElementById("myURL").value;
+                  document.getElementById("demo").innerHTML = x;
+                }
+            </script>
+        </form>
+        <input type="file" class="custom-file-input">
+        <p class="hr9">Supporting mp3, mp4 files</p>
+    </div>
+
+</body>
+</html>
